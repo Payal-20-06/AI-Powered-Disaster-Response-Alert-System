@@ -1,0 +1,127 @@
+AI-Powered Disaster Response & Alert System  
+===========================================
+
+Overview  
+--------
+This project is a full-stack AI-powered Disaster Response System built with:
+- **Flask (Python)** backend  
+- **React.js** frontend  
+- **MongoDB** database  
+- **Leaflet.js** for map visualization  
+
+It provides real-time alerts, disaster predictions, shelter management, resource tracking, safe-route generation, and analytics for emergency situations.  
+This system is designed to help disaster management teams quickly assess risks, take rapid action, and visualize critical information on an interactive map.
+
+-------------------------------------------------------------
+
+Key Features  
+------------
+### 1. Disaster Prediction (AI / Mock)
+- Generates disaster predictions using predefined logic or an ML model.
+- Shows probability, confidence score, affected zones, impact radius, and risk level.
+- Predictions appear instantly on the map as colored impact circles.
+
+### 2. Real-Time Alerts
+- Create alerts (warning, high-severity, critical).
+- Acknowledge alerts directly from the dashboard.
+- Alerts automatically show timestamps and status updates.
+
+### 3. Shelter Management
+- Add new shelters with capacity, location, and status.
+- Search shelters by proximity using latitude/longitude and radius filters.
+- Shelters are shown on the map as markers.
+
+### 4. Resource Tracking System
+- Add resources (medical kits, food, rescue tools, etc.).
+- Allocate resources to teams.
+- Delete resources no longer needed.
+
+### 5. Safe Route Generation
+- Generates safe evacuation routes between two coordinates.
+- Visualizes route waypoints on the interactive map.
+
+### 6. Map Visualization (Leaflet)
+- Displays disasters, shelters, safe zones, and hazards.
+- Supports dynamic rendering and overlays.
+- Auto refreshes based on new data.
+
+### 7. Analytics Dashboard
+- Shows statistics like:
+  - Total predictions
+  - Active alerts
+  - Available shelters
+  - Resource distribution
+  - High-risk zones
+  - Capacity summary
+
+### 8. System Health Check
+- Monitors backend and database connection status.
+
+-------------------------------------------------------------
+
+Tech Stack  
+----------
+**Frontend:**  
+- javascript 
+-  CSS  
+- Html
+- Botstrap
+- Fetch API for backend communication  
+
+**Backend:**  
+- Flask  
+- Flask-CORS  
+- MongoDB Atlas or Local MongoDB  
+ 
+
+**Database:**  
+- MongoDB Collections:
+  - disasters
+  - alerts
+  - shelters
+  - resources
+  - safe_routes
+
+-------------------------------------------------------------
+
+Backend Endpoints  
+------------------
+The backend provides RESTful API endpoints:
+
+### Disaster Prediction  
+- POST `/api/v1/predict`  
+- GET `/api/v1/predictions`  
+- GET `/api/v1/predictions/<id>`
+
+### Alerts  
+- POST `/api/v1/alerts`  
+- GET `/api/v1/alerts`  
+- PUT `/api/v1/alerts/<id>/acknowledge`
+
+### Shelters  
+- POST `/api/v1/shelters`  
+- GET `/api/v1/shelters`
+
+### Resources  
+- POST `/api/v1/resources`  
+- GET `/api/v1/resources`  
+- DELETE `/api/v1/resources/<id>`  
+- PUT `/api/v1/resources/<id>/allocate`
+
+### Safe Routes  
+- POST `/api/v1/routes/safe`
+
+
+### Map Overlay  
+- GET `/api/v1/map/overlay`
+
+### Health Check  
+- GET `/api/v1/health`
+
+-------------------------------------------------------------
+
+Frontend–Backend Connection  
+---------------------------
+The frontend reads the backend URL dynamically:
+
+1. `.env`
