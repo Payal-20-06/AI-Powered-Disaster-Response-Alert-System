@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="ar" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI System to Predict Natural Disaster</title>
+
+    <!-- Bootstrap RTL CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.rtl.min.css" crossorigin="anonymous">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">  </head>
+  <body>
+    <div class="MainP">
+
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg myNavbar">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">ResQNet</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+              <li class="nav-item"><a class="nav-link active" href="#">Map</a></li>
+              <li class="nav-item"><a class="nav-link active" href="login.html">Login/Sign Up</a></li>
+            </ul>
+            <form class="d-flex position-relative" onsubmit="event.preventDefault(); getRecommendations();">
+              <input class="form-control me-2" type="search" placeholder="Search city" id="cityInput">
+              <button class="btn btn-outline-success" type="button" onclick="getRecommendations()">Search</button>
+              <ul id="results" class="list-group position-absolute w-100" style="top: 45px; z-index: 999; display: none;"></ul>
+            </form>
+          </div>
+        </div>
+      </nav>
+
+      <!-- MAP CONTAINER -->
+      <div id="mapContainer" style="height: 400px; margin: 20px 5%; border: 2px solid #ccc;"></div>
+
+      <!-- Hero Section -->
+      <pre id="pre">
+<h1><b>Saving Lives Through Smart Alerts</b></h1>
+<p id="para">Advanced ML model predict disaster impact in real-time, providing early warnings, safe routes,
+shelter location, and resource tracking to minimize response time and maximize impact.</p>
+      </pre>
+
+      <!-- Impact Cards -->
+      <div id="Impact">
+        <h2><b>Impact & Performance</b></h2>
+        <p>Real-time metric showing how AI-powered and rapid response systems are <br>making a difference in disaster management</p>
+      </div>
+
+      <div class="Main">
+        <div class="main">
+          <div class="icon"><i class="fa-regular fa-circle-check fa-bounce fa-2x"></i></div>
+          <b>96%</b><br><b>Prediction Accuracy</b><br>ML model performance
+        </div>
+        <div class="main">
+          <div class="icon"><i class="fa-regular fa-clock fa-bounce fa-2x"></i></div>
+          <b>< 60s</b><br><b>Average Alert Delivery</b><br>Real-time predictions
+        </div>
+        <div class="main">
+          <div class="icon"><i class="fa-solid fa-desktop fa-fade fa-2x"></i></div>
+          <b>24/7</b><br><b>Real Time monitoring</b><br>Monitors Real-time data
+        </div>
+        <div class="main">
+          <div class="icon"><i class="fa-solid fa-people-roof fa-beat-fade fa-2x"></i></div>
+          <b>2.5M+</b><br><b>People Protected</b><br>Across all regions
+        </div>
+      </div>
+
+      <!-- Toggle Buttons -->
+      <div id="ashltr" class="my-4 text-center">
+        <button id="alert1" class="btn btn-danger me-2"><i class="fa-solid fa-bell fa-shake"></i> Alerts</button>
+        <button id="shltr" class="btn btn-primary"><i class="fa-solid fa-person-shelter fa-flip"></i> Shelter</button>
+      </div>
+
+      <!-- ALERTS SECTION -->
+      <div id="alertsSection" style="display: none;">
+        <div class="alert">
+          <!-- Flood -->
+          <div class="flood">
+            <div class="fld">
+              <div class="icons"><i class="fa-solid fa-water fa-beat fa-2x" style="color: #bc0707;"></i></div>
+              <div class="btn"><button id="crit">CRITICAL</button></div>
+            </div>
+            <h3>Flood Alert</h3>
+            <h4><b>Location:</b></h4>
+            <p>Mumbai Metropolian Area</p>
+            <p>Heavy rainfall causing severe flooding. Immediate evacuation recommended.</p>
+          </div>
+
+          <!-- Earthquake -->
+          <div class="Earthquake">
+            <div class="fld">
+              <div class="icons"><i class="fa-solid fa-triangle-exclamation fa-flip fa-3x" style="color: #fdca13;"></i></div>
+              <div class="btn"><button id="high">HIGH</button></div>
+            </div>
+            <h3>Earthquake Alert</h3>
+            <h4><b>Location:</b></h4>
+            <p>Delhi NCR Region</p>
+            <p>5.2 magnitude earthquake detected. Minor structural damage reported in older buildings.</p>
+          </div>
+
+          <!-- Storm -->
+          <div class="storm">
+            <div class="fld">
+              <div class="icons"><i class="fa-solid fa-wind fa-flip fa-3x" style="color: #430de3;"></i></div>
+              <div class="btn"><button id="medium">MEDIUM</button></div>
+            </div>
+            <h3>Storm Alert</h3>
+            <h4><b>Location:</b></h4>
+            <p>Chennai Coastal District</p>
+            <p>Cyclone warning issued. Strong winds and heavy rainfall expected in next 24 hours.</p>
+          </div>
+          <div id="view"> <i class="fa-solid fa-angles-right fa-fade fa-3x"></i> </div>
+        </div>
+      </div>
+
+      <!-- SHELTER SECTION -->
+      <!-- <div id="shelterSection" style="display: none;">
+        <div class="Main2">
+          <div id="safe">
+            <h2><b>Safe Zone & Shelters</b></h2>
+            <p>Find nearby evacuation centers and safe locations.</p>
+          </div>
+          <div id="shelterContainer"></div>
+        </div>
+      </div> -->
+      <!-- SHELTER SECTION -->
+<div id="shelterSection" style="display: none;">
+  <div class="Main2">
+    <div id="safe">
+      <h2><b>Safe Zone & Shelters</b></h2>
+      <p>Find nearby evacuation centers and safe locations.</p>
+    </div>
+
+    <!-- INSERTED SHELTER CARDS -->
+    <div id="shelterContainer">
+
+      <!-- Shelter 1 -->
+      <div class="shelter">
+        <div class="shelt">
+          <i class="fa-solid fa-building-columns fa-beat-fade fa-2x"></i>
+          <div class="h3">
+            <h3>City Center Community Hall</h3>
+            <h5>Downtown District</h5>
+          </div>
+          <button class="avail">available</button>
+        </div>
+
+        <div class="data">
+          <div>Capacity <br> <b>500</b></div>
+          <div class="mid">Occupied <br> <b>245</b></div>
+          <div>Distance <br> <b>2.3km</b></div>
+        </div>
+
+        <div class="prcnt">
+          <p>49% occupied</p>
+          <button class="dir"><i class="fa-regular fa-compass fa-spin fa-spin-reverse"></i> Get Direction</button>
+        </div>
+
+        <b>Emergency no. : 9448550336 , 8599069921</b>
+      </div>
+
+      <!-- Shelter 2 -->
+      <div class="shelter">
+        <div class="shelt">
+          <i class="fa-solid fa-building-columns fa-beat-fade fa-2x"></i>
+          <div class="h3">
+            <h3>East Side Relief Camp</h3>
+            <h5>East District</h5>
+          </div>
+          <button class="availmt">limited</button>
+        </div>
+
+        <div class="data">
+          <div>Capacity <br> <b>300</b></div>
+          <div class="mid">Occupied <br> <b>275</b></div>
+          <div>Distance <br> <b>4.8km</b></div>
+        </div>
+
+        <div class="prcnt">
+          <p>92% occupied</p>
+          <button class="dir"><i class="fa-regular fa-compass fa-spin fa-spin-reverse"></i> Get Direction</button>
+        </div>
+
+        <b>Emergency no. : 6448550656 , 9678569921</b>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+      <!-- RESOURCE TRACKING (Always Visible) -->
+      <div id="Resource">
+        <h3><b>Resource Tracking</b></h3>
+        <p>Real-time availability of emergency resources</p>
+      </div>
+
+      <div class="mainr">
+        <div class="track">
+          <div class="icn"><i class="fa-solid fa-kaaba"></i></div>
+          <div class="head"><b>Relief Suppliers</b></div>
+          <p><b>12,500</b></p>
+          <div class="progress">
+            <div class="progress-bar" style="width: 43%;"></div>
+          </div>
+          <p>Packages available</p>
+        </div>
+
+        <div class="track">
+          <div class="icn"><i class="fa-solid fa-people-group fa-bounce"></i></div>
+          <div class="head"><b>Volunteers Active</b></div>
+          <p><b>856/1200</b></p>
+          <div class="progress">
+            <div class="progress-bar" style="width: 58%;"></div>
+          </div>
+          <p>People available</p>
+        </div>
+
+        <div class="track">
+          <div class="icn"><i class="fa-solid fa-truck"></i></div>
+          <div class="head"><b>Transport Vehicles</b></div>
+          <p><b>124/150</b></p>
+          <div class="progress">
+            <div class="progress-bar" style="width: 83%;"></div>
+          </div>
+          <p>Vehicles available</p>
+        </div>
+
+        <div class="track">
+          <div class="icn"><i class="fa-regular fa-heart fa-beat-fade"></i></div>
+          <div class="head"><b>Medical Support</b></div>
+          <p><b>45/60</b></p>
+          <div class="progress">
+            <div class="progress-bar" style="width: 75%;"></div>
+          </div>
+          <p>Units available</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+  </body>
+</html>

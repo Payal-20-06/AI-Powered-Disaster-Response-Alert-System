@@ -1,0 +1,49 @@
+/* Push content below navbar */
+body {
+    background: #f1f3f6;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Center both forms */
+.login-container {
+    width: 100%;
+    min-height: calc(100vh - 80px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+}
+
+/* Form boxes */
+.form-box {
+    width: 340px;
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+}
+
+/* Inputs */
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+/* Button */
+.btn {
+    width: 100%;
+    padding: 12px;
+    background: #0a2a5e;
+    color: white;
+    border-radius: 8px;
+}
+
+/* Switch links */
+.switch span {
+    color: #0a2a5e;
+    cursor: pointer;
+    font-weight: 600;
+}
