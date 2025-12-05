@@ -5,7 +5,7 @@ A smart, real-time disaster management solution that uses AI, Machine Learning, 
 🚨 Key Features
 
 Real-time Disaster Detection:
-Utilizes AI/ML models and live data APIs (weather, seismic, satellite data) to identify potential disasters such as floods, earthquakes, storms, and fires.
+Utilizes AI/ML models and live data APIs to identify potential disasters such as floods, earthquakes, cyclone, and stroms.
 
 Smart Alert System:
 Sends instant SMS, email, and app-based notifications to users based on their geolocation and risk level.
@@ -14,21 +14,15 @@ User Location Tracking & Safety Status:
 Tracks user location with permission, allows them to mark themselves Safe / Unsafe, and helps responders view affected zones.
 
 Emergency Resource Dashboard:
-Displays shelters, hospitals, safe routes, and resource availability in real time.
-
-Incident Reporting:
-Users can submit on-ground reports (images, text, location), enabling more accurate situational awareness.
-
-Admin Panel for Authorities:
-Authorities can monitor live data, broadcast alerts, verify incident reports, and manage resources.
+Displays shelters, safe routes, and resource availability in real time.
 
 🧠 Tech Stack
 
-Frontend: React / Next.js / Tailwind (or your stack)
-Backend: Node.js / Express / Python Flask (modify accordingly)
-Database: MongoDB / Firebase
+Frontend: html / css / javascript
+Backend: Python Flask
+Database: MongoDB
 AI Models: Risk prediction, disaster classification, severity scoring
-APIs: Weather, Geo-location, Messaging APIs (Twilio/Firebase)
+APIs: Weather, Geo-location, Messaging APIs
 
 🎯 Purpose
 
